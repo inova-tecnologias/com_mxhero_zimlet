@@ -1,0 +1,13 @@
+<zimlet name="com_mxhero_zimlet" version="1.6.1" target="main compose-window view-window" label="mxHero" description="mxHero - email better">
+	<include>mxhero.js</include>
+	<includeCSS>mxhero.css</includeCSS>
+	<resource>mxhero_16x16.png</resource>
+	<handlerObject>Com_mxHero_Zimlet</handlerObject>
+	<zimletPanelItem label="mxHero" icon="mxhero-panelIcon">
+		<toolTipText>mxHero - email better</toolTipText>
+		<onClick>
+			<canvas title="mxHero" type="dialog" width="1024" height="480" />
+			<actionUrl method="get" target="http://mxhero.com" />
+		</onClick>
+	</zimletPanelItem>
+</zimlet>
