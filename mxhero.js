@@ -88,43 +88,49 @@ mxHeroZimlet.prototype.initializeToolbar = function (app, toolbar, controller, v
 			button = toolbar.createOp (mxHeroZimlet.COMPOSE_BUTTON, buttonArgs);
 			menu = new ZmPopupMenu(button); // create menu
 			button.setMenu(menu); //add menu to button
+
+
+			this._addMenuWithAction (menu, {
+				messageKeyButton: "mxHeroZimlet_buttonAttachmentTrack",
+				messageKeyToolTip: "mxHeroZimlet_buttonAttachmentTrack_tooltip",
+				action: mxHeroZimlet.prototype._addAttachmentTrackAction,
+			});
 		
-			this._setAttachmentTrackMenu (menu);
-			this._setSendAsPersonalMenu (menu);
-			this._setEnhancedBccMenu (menu);
-			this._setReadOnceMenu (menu);
+			this._addMenuWithAction (menu, {
+				messageKeyButton: "mxHeroZimlet_buttonSendAsPersonal",
+				messageKeyToolTip: "mxHeroZimlet_buttonSendAsPersonal_tooltip",
+				action: mxHeroZimlet.prototype._addSendAsPersonalAction,
+			});
+
+			this._addMenuWithAction (menu, {
+				messageKeyButton: "mxHeroZimlet_buttonSecureEmail",
+				messageKeyToolTip: "mxHeroZimlet_buttonSecureEmail_tooltip",
+				action: mxHeroZimlet.prototype._addSecureEmailAction,
+			});
+
+			this._addMenuWithAction (menu, {
+				messageKeyButton: "mxHeroZimlet_buttonEnhancedBcc",
+				messageKeyToolTip: "mxHeroZimlet_buttonEnhancedBcc_tooltip",
+				action: mxHeroZimlet.prototype._addEnhancedBccAction,
+			});
+
+			this._addMenuWithAction (menu, {
+				messageKeyButton: "mxHeroZimlet_buttonReadOnce",
+				messageKeyToolTip: "mxHeroZimlet_buttonReadOnce_tooltip",
+				action: mxHeroZimlet.prototype._addReadOnceActione,
+			});
+
 			this._setReplyTimeoutMenu (menu);
 			this._setHelpMenu (menu);
 		}
 	}
 }
 
-mxHeroZimlet.prototype._setReadOnceMenu = function (menu)
+mxHeroZimlet.prototype._addMenuWithAction = function (menu, params)
 {
-	var item = menu.createMenuItem(Dwt.getNextId(), {text:this.getMessage("mxHeroZimlet_buttonReadOnce"), style:DwtMenuItem.CHECK_STYLE});
-	item.setToolTipContent( this.getMessage("mxHeroZimlet_buttonReadOnce_tooltip") );
-	item.addSelectionListener (new AjxListener(this, this._addReadOnceAction, [item]));
-}
-
-mxHeroZimlet.prototype._setSendAsPersonalMenu = function (menu)
-{
-	var item = menu.createMenuItem(Dwt.getNextId(), {text:this.getMessage("mxHeroZimlet_buttonSendAsPersonal"), style:DwtMenuItem.CHECK_STYLE});
-	item.setToolTipContent( this.getMessage("mxHeroZimlet_buttonSendAsPersonal_tooltip") );
-	item.addSelectionListener (new AjxListener(this, this._addSendAsPersonalAction, [item]));
-}
-
-mxHeroZimlet.prototype._setEnhancedBccMenu = function (menu)
-{
-	var item = menu.createMenuItem(Dwt.getNextId(), {text:this.getMessage("mxHeroZimlet_buttonEnhancedBcc"), style:DwtMenuItem.CHECK_STYLE});
-	item.setToolTipContent( this.getMessage("mxHeroZimlet_buttonEnhancedBcc_tooltip") );
-	item.addSelectionListener (new AjxListener(this, this._addEnhancedBccAction, [item]));
-}
-
-mxHeroZimlet.prototype._setAttachmentTrackMenu = function (menu)
-{
-	var item = menu.createMenuItem(Dwt.getNextId(), {text:this.getMessage("mxHeroZimlet_buttonAttachmentTrack"), style:DwtMenuItem.CHECK_STYLE});
-	item.setToolTipContent( this.getMessage("mxHeroZimlet_buttonAttachmentTrack_tooltip") );
-	item.addSelectionListener (new AjxListener(this, this._addAttachmentTrackAction, [item]));
+	var item = menu.createMenuItem(Dwt.getNextId(), {text:this.getMessage(params.messageKeyButton), style:DwtMenuItem.CHECK_STYLE});
+	item.setToolTipContent( this.getMessage(params.messageKeyToolTip) );
+	item.addSelectionListener (new AjxListener(this, params.action, [item]));
 }
 
 mxHeroZimlet.prototype._setHelpMenu = function (menu)
@@ -205,12 +211,20 @@ mxHeroZimlet.prototype._addReplyTimeoutAction = function (item, tag, timeout)
 		this._setActionOnStack ('X-mxHero-Action-ReplyTimeout', null);
 }
 
+mxHeroZimlet.prototype._addSecureEmailAction = function (item)
+{
+	if (item.getChecked())
+		this._setActionOnStack ('X-mxHero-Action-SecureEmail', {value: 'true', locale: this.getMessage("mxHeroZimlet_locale")});
+	else
+		this._setActionOnStack ('X-mxHero-Action-SecureEmail', null);
+}
+
 mxHeroZimlet.prototype._addReadOnceAction = function (item)
 {
 	if (item.getChecked())
-		this._setActionOnStack ('X-mxHero-Action-ReadOnce', {value: 'true', locale: this.getMessage("mxHeroZimlet_locale")});
+		this._setActionOnStack ('X-mxHero-Action-SelfDestruct', {value: 'true', locale: this.getMessage("mxHeroZimlet_locale")});
 	else
-		this._setActionOnStack ('X-mxHero-Action-ReadOnce', null);
+		this._setActionOnStack ('X-mxHero-Action-SelfDestruct', null);
 }
 
 mxHeroZimlet.prototype._addEnhancedBccAction = function (item)
@@ -225,9 +239,9 @@ mxHeroZimlet.prototype._addEnhancedBccAction = function (item)
 mxHeroZimlet.prototype._addSendAsPersonalAction = function (item)
 {
 	if (item.getChecked())
-		this._setActionOnStack ('X-mxHero-Action-SendAsPersonal', {value: 'true'});
+		this._setActionOnStack ('X-mxHero-Action-PrivateDelivery', {value: 'true'});
 	else
-		this._setActionOnStack ('X-mxHero-Action-SendAsPersonal', null);
+		this._setActionOnStack ('X-mxHero-Action-PrivateDelivery', null);
 }
 
 mxHeroZimlet.prototype._setActionOnStack = function (id, action)
@@ -243,7 +257,7 @@ mxHeroZimlet.prototype._setViewOnActionStack = function (viewId)
 mxHeroZimlet.prototype._addHelpAction = function (item)
 {
 	var help_tab = window.open();
-	help_tab.location = "http://www.mxhero.com/help/zimlet-extension";
+	help_tab.location = this.getMessage("mxHeroZimlet_help_url");
 }
 
 
