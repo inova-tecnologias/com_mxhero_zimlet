@@ -1,4 +1,4 @@
-<zimlet name="com_mxhero_zimlet" version="1.6.1" target="main compose-window view-window" label="mxHero" description="mxHero - email better">
+<zimlet name="com_mxhero_zimlet" version="2.2.0" target="main compose-window view-window" label="mxHero" description="mxHero - email better">
 	<include>mxhero.js</include>
 	<includeCSS>mxhero.css</includeCSS>
 	<resource>mxhero_16x16.png</resource>
