@@ -117,7 +117,7 @@ mxHeroZimlet.prototype.initializeToolbar = function (app, toolbar, controller, v
 			this._addMenuWithAction (menu, {
 				messageKeyButton: "mxHeroZimlet_buttonReadOnce",
 				messageKeyToolTip: "mxHeroZimlet_buttonReadOnce_tooltip",
-				action: mxHeroZimlet.prototype._addReadOnceActione,
+				action: mxHeroZimlet.prototype._addReadOnceAction,
 			});
 
 			this._setReplyTimeoutMenu (menu);
