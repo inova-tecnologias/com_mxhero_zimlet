@@ -2,15 +2,15 @@
  * ***** BEGIN LICENSE BLOCK *****
  * mxsolutions Inc.
  * Copyright (C) 2017 mxsolutions Inc.
- * 
+ *
  * The contents of this file are subject to the Zimbra Public License
  * Version 1.3 ("License"); you may not use this file except in
  * compliance with the License.  You may obtain a copy of the License at
  * http://www.zimbra.com/license.
- * 
+ *
  * Software distributed under the License is distributed on an "AS IS"
  * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied.
- * 
+ *
  * ***** END LICENSE BLOCK *****
  */
 
@@ -33,7 +33,7 @@ var mxHeroZimlet = Com_mxHero_Zimlet;
 /**
  * The mxHero Compose Button Name.
  */
-mxHeroZimlet.COMPOSE_BUTTON = "MXHERO_COMPOSE_BUTTON";
+mxHeroZimlet.COMPOSE_BUTTON = "MXGATEWAY_COMPOSE_BUTTON";
 
 /**
  * The mxHero e-mail action stack.
@@ -84,7 +84,7 @@ mxHeroZimlet.prototype.initializeToolbar = function (app, toolbar, controller, v
 				index: 1, // Always after 'send' button
 				image: "mxhero-panelIcon"
 			};
-		
+
 			button = toolbar.createOp (mxHeroZimlet.COMPOSE_BUTTON, buttonArgs);
 			menu = new ZmPopupMenu(button); // create menu
 			button.setMenu(menu); //add menu to button
@@ -95,7 +95,7 @@ mxHeroZimlet.prototype.initializeToolbar = function (app, toolbar, controller, v
 				messageKeyToolTip: "mxHeroZimlet_buttonAttachmentTrack_tooltip",
 				action: mxHeroZimlet.prototype._addAttachmentTrackAction,
 			});
-		
+
 			this._addMenuWithAction (menu, {
 				messageKeyButton: "mxHeroZimlet_buttonSendAsPersonal",
 				messageKeyToolTip: "mxHeroZimlet_buttonSendAsPersonal_tooltip",
